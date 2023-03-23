@@ -1,21 +1,49 @@
 import 'package:flutter/material.dart';
+import 'models/weather.dart';
+import 'api/weather_api.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-  // This widget is the root of your application.
+class _MyAppState extends State<MyApp> {
+  late Weather _weather;
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentWeather();
+  }
+
+  Future<void> _getCurrentWeather() async {
+    final weather = await WeatherApi.getCurrentWeather('New York');
+    setState(() {
+      _weather = weather;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Weather App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      home: Scaffold(
+        body: Center(
+          child: _weather != null
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(_weather.city),
+                    Text(_weather.description),
+                    Text('${_weather.temperature.toString()}°C'),
+                  ],
+                )
+              : CircularProgressIndicator(),
+        ),
       ),
-      home: const MyHomePage(title: 'Weather App'),
     );
   }
 }
