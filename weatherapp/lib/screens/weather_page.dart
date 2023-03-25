@@ -11,6 +11,7 @@ class WeatherPage extends StatefulWidget {
 class _WeatherPageState extends State<WeatherPage> {
   final _cityController = TextEditingController();
   Weather? _weather;
+  String _backgroundImage = 'assets/images/sunny.png';
 
   Future<void> _getWeatherData() async {
     final city = _cityController.text.trim();
@@ -18,6 +19,14 @@ class _WeatherPageState extends State<WeatherPage> {
       final weather = await WeatherApi.getCurrentWeather(city);
       setState(() {
         _weather = weather;
+        // Set the background image based on the weather description
+        if (_weather!.description.toLowerCase().contains('sun')) {
+          _backgroundImage = 'assets/images/sunny.png';
+        } else if (_weather!.description.toLowerCase().contains('clouds')) {
+          _backgroundImage = 'assets/images/cloudy.png';
+        } else if (_weather!.description.toLowerCase().contains('rain')) {
+          _backgroundImage = 'assets/images/rainy.png';
+        }
       });
     }
   }
@@ -28,7 +37,7 @@ class _WeatherPageState extends State<WeatherPage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/sunny.png'),
+            image: AssetImage(_backgroundImage),
             fit: BoxFit.cover,
           ),
         ),
@@ -60,27 +69,40 @@ class _WeatherPageState extends State<WeatherPage> {
               ),
               SizedBox(height: 32.0),
               if (_weather != null) ...[
-                Text(
-                  _weather!.city,
-                  style: TextStyle(
-                    fontSize: 36.0,
-                    fontWeight: FontWeight.bold,
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16.0),
                   ),
-                ),
-                SizedBox(height: 16.0),
-                Text(
-                  '${_weather!.temperature.toStringAsFixed(1)}°C',
-                  style: TextStyle(fontSize: 24.0),
-                ),
-                SizedBox(height: 16.0),
-                Text(
-                  _weather!.description,
-                  style: TextStyle(fontSize: 24.0),
-                ),
-                SizedBox(height: 16.0),
-                Text(
-                  'Last updated: ${DateFormat('dd/MM/yyyy').add_jm().format(DateTime.now())}',
-                  style: TextStyle(fontSize: 16.0),
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      children: [
+                        Text(
+                          _weather!.city,
+                          style: TextStyle(
+                            fontSize: 36.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 16.0),
+                        Text(
+                          '${_weather!.temperature.toStringAsFixed(1)}°C',
+                          style: TextStyle(fontSize: 24.0),
+                        ),
+                        SizedBox(height: 16.0),
+                        Text(
+                          _weather!.description,
+                          style: TextStyle(fontSize: 24.0),
+                        ),
+                        SizedBox(height: 16.0),
+                        Text(
+                          'Last updated: ${DateFormat('dd/MM/yyyy').add_jm().format(DateTime.now())}',
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ],
