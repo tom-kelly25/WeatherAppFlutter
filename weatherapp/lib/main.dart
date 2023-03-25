@@ -36,6 +36,7 @@ class _MyAppState extends State<MyApp> {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text(_weather!.city),
                     Text(_weather!.description),
                     Text('${_weather!.temperature.toString()}°C'),
                   ],
