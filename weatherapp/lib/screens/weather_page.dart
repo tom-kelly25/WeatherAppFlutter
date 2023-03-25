@@ -20,7 +20,7 @@ class _WeatherPageState extends State<WeatherPage> {
       setState(() {
         _weather = weather;
         // Set the background image based on the weather description
-        if (_weather!.description.toLowerCase().contains('sun')) {
+        if (_weather!.description.toLowerCase().contains('clear')) {
           _backgroundImage = 'assets/images/sunny.png';
         } else if (_weather!.description.toLowerCase().contains('clouds')) {
           _backgroundImage = 'assets/images/cloudy.png';
@@ -28,6 +28,7 @@ class _WeatherPageState extends State<WeatherPage> {
           _backgroundImage = 'assets/images/rainy.png';
         }
       });
+      FocusScope.of(context).unfocus();
     }
   }
 
@@ -65,6 +66,10 @@ class _WeatherPageState extends State<WeatherPage> {
               SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: _getWeatherData,
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.white,
+                  onPrimary: Colors.black,
+                ),
                 child: Text('Get Weather'),
               ),
               SizedBox(height: 32.0),
