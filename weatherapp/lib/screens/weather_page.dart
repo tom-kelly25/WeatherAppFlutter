@@ -25,61 +25,66 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Test App'),
-      ),
       body: Container(
-        child: Stack(
-          children: [
-            Image.asset(
-              'assets/images/sunny.png',
-              fit: BoxFit.cover,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextField(
-                    controller: _cityController,
-                    decoration: InputDecoration(
-                      labelText: 'Enter city name',
-                    ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/sunny.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                controller: _cityController,
+                decoration: InputDecoration(
+                  labelText: 'Enter city name',
+                  labelStyle: TextStyle(color: Colors.black),
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.search, color: Colors.black),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
                   ),
-                  SizedBox(height: 16.0),
-                  ElevatedButton(
-                    onPressed: _getWeatherData,
-                    child: Text('Get Weather'),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
                   ),
-                  SizedBox(height: 16.0),
-                  if (_weather != null) ...[
-                    Text(
-                      _weather!.city,
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      '${_weather!.temperature.toStringAsFixed(1)}°C',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      _weather!.description,
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Last updated: ${DateFormat.yMd().add_jm().format(DateTime.now())}',
-                      style: TextStyle(fontSize: 12.0),
-                    ),
-                  ],
-                ],
+                  hoverColor: Colors.black,
+                ),
               ),
-            ),
-          ],
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: _getWeatherData,
+                child: Text('Get Weather'),
+              ),
+              SizedBox(height: 32.0),
+              if (_weather != null) ...[
+                Text(
+                  _weather!.city,
+                  style: TextStyle(
+                    fontSize: 36.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  '${_weather!.temperature.toStringAsFixed(1)}°C',
+                  style: TextStyle(fontSize: 24.0),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  _weather!.description,
+                  style: TextStyle(fontSize: 24.0),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'Last updated: ${DateFormat('dd/MM/yyyy').add_jm().format(DateTime.now())}',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );
