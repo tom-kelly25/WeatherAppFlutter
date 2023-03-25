@@ -105,11 +105,6 @@ class _WeatherPageState extends State<WeatherPage> {
                 ),
                 SizedBox(height: 16.0),
                 Text(
-                  '${_weather!.temperature.toStringAsFixed(1)}°C',
-                  style: TextStyle(fontSize: 24.0, color: Colors.white),
-                ),
-                SizedBox(height: 16.0),
-                Text(
                   _weather!.description,
                   style: TextStyle(fontSize: 24.0, color: Colors.white),
                 ),
