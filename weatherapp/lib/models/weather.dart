@@ -1,11 +1,10 @@
 class Weather {
+  final String city;
   final String description;
   final double temperature;
-  final String city;
 
-  Weather({
-    required this.description,
-    required this.temperature,
-    required this.city,
-  });
+  Weather(
+      {required this.city,
+      required this.description,
+      required this.temperature});
 }
